@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { NextPage, GetStaticProps, GetStaticPropsContext, GetStaticPaths } from "next";
+import {
+  NextPage,
+  GetStaticProps,
+  GetStaticPropsContext,
+  GetStaticPaths,
+} from "next";
 import { useRouter } from "next/router";
 import { Product } from "../types/types";
 import { ProductForm } from "../components/ProductForm";
@@ -19,23 +24,28 @@ const ProductDetail: NextPage<ProductDetailProps> = ({ initialProduct }) => {
   };
 
   const handleUpdateProduct = () => {
-    // Perform validation for price, type, description, and color
-    if (product.price < 0 || product.type.length > 55 || product.description.length > 55 || product.color.length > 55) {
-      // Show an error message or prevent the form submission
+    if (
+      product.price < 0 ||
+      product.type.length > 55 ||
+      product.description.length > 55 ||
+      product.color.length > 55
+    ) {
       return;
     }
 
-    // Perform the update action (you may want to implement a backend API to handle the update)
     console.log("Product updated:", product);
 
-    // Redirect back to the Product List Page
     router.push("/product-list");
   };
 
   return (
     <div>
       <h1>Product Detail Page</h1>
-      <ProductForm product={product} onInputChange={handleInputChange} onUpdateProduct={handleUpdateProduct} />
+      <ProductForm
+        product={product}
+        onInputChange={handleInputChange}
+        onUpdateProduct={handleUpdateProduct}
+      />
     </div>
   );
 };
@@ -51,19 +61,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return { paths, fallback: false };
 };
-
-// export const getStaticProps: GetStaticProps<ProductDetailProps, { sku: string }> = async (
-//     context: GetStaticPropsContext<{ sku: string }>
-//   ) => {
-//     const response = await fetch("/data/products.json");
-//     const products: Product[] = await response.json();
-//     const sku = context.params?.sku as string;
-//     const initialProduct = products.find((product) => product.sku === sku);
-  
-//     return {
-//       props: { initialProduct },
-//     };
-//   };
-  
 
 export default ProductDetail;

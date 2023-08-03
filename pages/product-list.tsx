@@ -62,8 +62,6 @@ const ProductList: NextPage<ProductListProps> = ({ initialProducts }) => {
 };
 
 export const getStaticProps: GetStaticProps<ProductListProps> = async () => {
-  // const response = await fetch("../data/products.json");
-  // const initialProducts: Product[] = await response.json();
   const initialProducts: Product[] = ProductsData;
 
   return {
